@@ -22,11 +22,6 @@ class MessageType extends AbstractType
                     'placeholder' => 'Type your message..',
                 ],
             ])
-            // ->add('send', SubmitType::class, [
-            //     'attr' => [
-            //         'class' => 'btn btn-success',
-            //     ],
-            // ])
         ;
     }
 
@@ -35,6 +30,9 @@ class MessageType extends AbstractType
         $resolser
             ->setDefaults([
                 'data_class' => Message::class,
+                'attr' => [
+                    'class' => 'chat-form',
+                ],
             ])
         ;
     }
