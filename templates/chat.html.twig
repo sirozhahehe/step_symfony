@@ -52,11 +52,31 @@
               {{ form_start(form) }}
               {{ form_widget(form.text) }}
         
-            <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
-            <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
-              <button class="ms-3" type="submit"><i class="fas fa-paper-plane"></i></button>
+              <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
+              <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
+              <button id="send_message" class="ms-3" type="submit"><i class="fas fa-paper-plane"></i></button>
             
               {{ form_end(form) }}
+
+            <div class="prototypes">
+              <div class="d-flex flex-row justify-content-end message-from-me-prototype">
+                <div>
+                  <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary message-text"></p>
+                  <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end message-time"></p>
+                </div>
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                  alt="avatar 1" style="width: 45px; height: 100%;">
+              </div>
+
+              <div class="d-flex flex-row justify-content-start mb-4 message-to-me-prototype">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                  alt="avatar 1" style="width: 45px; height: 100%;">
+                <div>
+                  <p class="small p-2 ms-3 mb-1 rounded-3 message-text" style="background-color: #f5f6f7;"></p>
+                  <p class="small ms-3 mb-3 rounded-3 text-muted message-time"></p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -66,13 +86,4 @@
   </div>
 </section>
 
-
-
-
-
-
-
- 
-    {# {{ form_start(form) }} #}
-    {# {{ form_end() }} #}
 {% endblock %}
