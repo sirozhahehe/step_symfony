@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="btn btn-danger">
+    Hello!
+
+    {{ app.request.query.get('get') }}
+</div>
+
+<div class="">
+<ul class="list">
+    {% for i, var in cars %}
+        <li>{{ var ~ ', ' ~ i}}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

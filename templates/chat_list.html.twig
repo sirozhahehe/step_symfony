@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+{% block body %}
+    <div class="chat_list">
+        {% for chat in chats %}
+            <div class="chat_item">
+                {{ chat.title ?? 'Private' }} <a>Edit Chat</a>
+            </div>
+        {% else %}
+            <div class="chat_item">No chats found.</div>
+        {% endfor %}
+    </div>
+
+    {{ form(form) }}
+    {# {{ form_start(form) }} #}
+    {# {{ form_end() }} #}
+{% endblock %}

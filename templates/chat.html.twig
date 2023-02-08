@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="chat">
+        {% for message in messages %}
+            <div class="message">
+                {{ message.text }}
+                <sub>{{ message.sentAt|date('Y-m-d H:i:s', 'Asia/Almaty') }}</sub>
+                <sup><a class="btn btn-sm btn-danger" href="{{ path('message_delete', {'message': message.id}) }}">X</a></sup>
+            </div>
+        {% else %}
+            <div>No messages found.</div>
+        {% endfor %}
+    </div>
+
+    {{ form(form) }}
+    {# {{ form_start(form) }} #}
+    {# {{ form_end() }} #}
+{% endblock %}
