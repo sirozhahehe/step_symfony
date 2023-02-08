@@ -20,12 +20,8 @@
     <body>
         <div class="container">
             <div class="row">
-                {{ 'now'|date('Y-m-d')}}
                 {% block body %}
-                
-                <a class="btn btn-info" href="{{ path('message_create', {'chat':1}) }}">Create Message</a>
-                
-                Welcome!
+                    Welcome!
                 {% endblock %}
             </div>
         </div>
