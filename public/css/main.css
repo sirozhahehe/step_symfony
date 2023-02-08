@@ -1,0 +1,7 @@
+.chat-window {
+    position: relative;
+    height: 400px;
+    overflow: hidden !important;
+    overflow-anchor: none;
+    touch-action: auto;
+}
