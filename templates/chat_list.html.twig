@@ -16,7 +16,12 @@
         {% endfor %}
     </div>
 
-    {{ form(form) }}
-    {# {{ form_start(form) }} #}
-    {# {{ form_end() }} #}
+    {{ form_start(form)}}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+    <div class="mb-3">
+        <button class="btn btn-success" type="submit">Create</button>
+    </div>
+
+    {{ form_end(form) }}
 {% endblock %}

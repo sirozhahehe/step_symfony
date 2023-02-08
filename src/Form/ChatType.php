@@ -27,11 +27,6 @@ class ChatType extends AbstractType
                     'placeholder' => 'Type your chat description..',
                 ],
             ])
-            ->add('create', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-success',
-                ],
-            ])
         ;
     }
 
