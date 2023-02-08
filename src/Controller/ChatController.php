@@ -28,7 +28,7 @@ class ChatController extends AbstractController
             $em->persist($chat);
             $em->flush();
             return $this->redirectToRoute('message_create', [
-                'chatId' => $chat->getId(),
+                'chat' => $chat->getId(),
             ]);
         }
 
@@ -36,6 +36,31 @@ class ChatController extends AbstractController
             'chats' => $em->getRepository(Chat::class)->findAll(),
             'form'     => $form->createView(),
         ]);
+    }
+
+    #[Route('/chat/edit/{chat}', name: 'chat_edit', requirements: ['chat' => '\d+'])]
+    public function edit(Chat $chat, Request $request, EntityManagerInterface $em)
+    {
+        $form = $this->createForm(ChatType::class, $chat);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $em->persist($chat);
+            $em->flush();
+            return $this->redirectToRoute('chat_create');
+        }
+
+        return $this->render('chat_edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/chat/delete/{chat}', name: 'chat_delete', requirements: ['chat' => '\d+'])]
+    public function delete(Chat $chat, EntityManagerInterface $em)
+    {
+        $em->remove($chat);
+        $em->flush();
+        return $this->redirectToRoute('chat_create');
     }
     
 }

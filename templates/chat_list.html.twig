@@ -7,7 +7,9 @@
     <div class="chat_list">
         {% for chat in chats %}
             <div class="chat_item">
-                {{ chat.title ?? 'Private' }} <a>Edit Chat</a>
+                {{ chat.title ?? 'Private' }} 
+                <a class="btn btn-sm btn-info" href="{{ path('chat_edit', {'chat': chat.id}) }}">Edit</a>
+                <a class="btn btn-sm btn-danger" href="{{ path('chat_delete', {'chat': chat.id}) }}">Delete</a>
             </div>
         {% else %}
             <div class="chat_item">No chats found.</div>

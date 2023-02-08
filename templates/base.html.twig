@@ -21,7 +21,7 @@
                 {{ 'now'|date('Y-m-d')}}
                 {% block body %}
                 
-                <a class="btn btn-info" href="{{ path('message_create', {'chatId':1}) }}">Create Message</a>
+                <a class="btn btn-info" href="{{ path('message_create', {'chat':1}) }}">Create Message</a>
                 
                 Welcome!
                 {% endblock %}
