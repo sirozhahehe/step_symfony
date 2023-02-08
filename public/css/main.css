@@ -1,7 +1,8 @@
 .chat-window {
     position: relative;
     height: 400px;
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: scroll;
     overflow-anchor: none;
     touch-action: auto;
 }
