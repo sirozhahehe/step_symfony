@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Chat;
 use App\Form\ChatType;
+use App\Form\MessageType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,9 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChatController extends AbstractController
 {
 
-    public function view(int $chatId)
+    #[Route('/chat/{chat}', name: 'chat_view', requirements: ['chat' => '\d+'], methods: ['GET'])]
+    public function view(Chat $chat, Request $request, EntityManagerInterface $em)
     {
-        
+        return $this->render('chat.html.twig', [
+            'messages' => $chat->getMessages(),
+            'form'     => $this->createForm(MessageType::class)->createView(),
+        ]);
     }
 
     #[Route('/chat/create', name: 'chat_create')]
@@ -27,7 +32,7 @@ class ChatController extends AbstractController
         if ($form->isSubmitted()) {
             $em->persist($chat);
             $em->flush();
-            return $this->redirectToRoute('message_create', [
+            return $this->redirectToRoute('chat_view', [
                 'chat' => $chat->getId(),
             ]);
         }
