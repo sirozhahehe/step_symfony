@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Chat;
+use App\Entity\Message;
 use App\Form\ChatType;
 use App\Form\MessageType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -66,6 +67,13 @@ class ChatController extends AbstractController
         $em->remove($chat);
         $em->flush();
         return $this->redirectToRoute('chat_create');
+    }
+
+    #[Route('/chat/{chat}/getMessages', name: 'app_get_messages')]
+    public function getLastMessages(Chat $chat, EntityManagerInterface $em)
+    {
+        $messages = $em->getRepository(Message::class)->findBy(['chat' => $chat]);
+        return $this->json($messages);
     }
     
 }

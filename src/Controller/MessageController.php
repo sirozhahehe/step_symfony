@@ -18,6 +18,7 @@ class MessageController extends AbstractController
     public function create(Chat $chat, Request $request, EntityManagerInterface $em)
     {
         $message = new Message();
+        $message->setSender($this->getUser());
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 

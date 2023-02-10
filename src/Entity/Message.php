@@ -23,6 +23,10 @@ class Message
     #[ORM\ManyToOne(targetEntity: Chat::class, inversedBy: 'messages')]
     private Chat $chat;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn('sender_id', referencedColumnName: 'id')]
+    private ?User $sender = null;
+
     public function __construct(?string $text = null)
     {
         $this->text = $text;
@@ -58,6 +62,15 @@ class Message
 	public function setChat(Chat $chat): self
     {
 		$this->chat = $chat;
+		return $this;
+	}
+
+	public function getSender(): ?User {
+		return $this->sender;
+	}
+	
+	public function setSender(User $sender): self {
+		$this->sender = $sender;
 		return $this;
 	}
 }
