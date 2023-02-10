@@ -19,6 +19,11 @@ class RegisterType extends AbstractType
         $builder
             ->add('username')
             ->add('password')
+            ->add('register', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-success',
+                ],
+            ])
         ;
     }
 
