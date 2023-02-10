@@ -14,7 +14,7 @@ class ChatController extends AbstractController
 {
 
     #[Route('/chat/{chat}', name: 'chat_view', requirements: ['chat' => '\d+'], methods: ['GET'])]
-    public function view(Chat $chat, Request $request, EntityManagerInterface $em)
+    public function view(Chat $chat)
     {
         return $this->render('chat.html.twig', [
             'messages' => $chat->getMessages(),

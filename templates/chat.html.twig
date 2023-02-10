@@ -1,18 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-
-        {# {% for message in messages %}
-            <div class="message">
-                {{ message.text }}
-                <sub>{{ message.sentAt|date('Y-m-d H:i:s', 'Asia/Almaty') }}</sub>
-                <sup><a class="btn btn-sm btn-danger" href="{{ path('message_delete', {'message': message.id}) }}">X</a></sup>
-            </div>
-        {% else %}
-            <div>No messages found.</div>
-        {% endfor %} #}
-
-<section style="background-color: #eee;">
+<section style="background-color: #fff;">
   <div class="container py-5">
 
     <div class="row d-flex justify-content-center">
@@ -52,9 +41,9 @@
               {{ form_start(form) }}
               {{ form_widget(form.text) }}
         
-              <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
-              <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
-              <button id="send_message" class="ms-3" type="submit"><i class="fas fa-paper-plane"></i></button>
+              <a class="ms-1 chat-btn text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
+              <a class="ms-3 chat-btn text-muted" href="#!"><i class="fas fa-smile"></i></a>
+              <button id="send_message" class="ms-3 chat-btn" type="submit"><i class="fas fa-paper-plane"></i></button>
             
               {{ form_end(form) }}
 
