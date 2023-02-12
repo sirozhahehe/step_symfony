@@ -1,25 +1,97 @@
+const chat = $('.chat')
+const sendMessageURL = '/chat/' + chat.data('chat-id');
+const fetchMessagesURL = sendMessageURL + '/getMessages';
+const currentUser = chat.data('user-id');
+const chatWindow = chat.find('.chat-window');
+let isLoading = false;
+
 $(document)
     .on('click', '#send_message', function (e) {
         e.preventDefault();
-        let form = $(this).closest('form');
+        const form = $(this).closest('form');
+        const formData = form.serialize();
         let input = form.find('input#message_text');
+        if (input.val() === '') {
+            fireAlert('Message can not be empty!');
+            return false;
+        }
+        input.val('');
         $.ajax({
-            url: window.location.href,
+            url: sendMessageURL,
             method: 'POST',
-            data: form.serialize(),
+            data: formData,
             success: function(data) {
-                let text = input.val();
-                input.val('');
-                let prototype = $('.message-from-me-prototype').clone();
-                prototype.removeClass('message-from-me-prototype');
-                prototype.find('p.message-text').text(text);
-
-                let date = new Date();
-	            let time = date.getHours()+":"+date.getMinutes();
-                
-                prototype.find('p.message-time').text(time)
-                $('.chat-window').append(prototype);
+                drawMessage(data);
             }
         });
     })
 ;
+chatWindow.scroll(function() {
+    if(chatWindow.scrollTop() == chatWindow.height() - chatWindow.height()) {
+        if (!isLoading) {
+            isLoading = true;
+            let messages = fetchMessages(chatWindow.find('.chat-message').length).reverse();
+            $(messages).each(function (i) {
+                drawMessage(this, 'top');
+            })
+            chatWindow.scrollTop(1)
+            isLoading = false;
+        }
+    }
+});
+$(document).ready(function (e) {
+    chatWindow.scrollTop(chatWindow[0].scrollHeight);
+
+    setInterval(function () {
+        let messages = fetchMessages();
+        $(messages).each(function (i) {
+            drawMessage(this);
+        })
+    }, 5000);
+})
+
+function fetchMessages(offset = 0)
+{
+    let messages = [];
+    $.ajax({
+        url: fetchMessagesURL,
+        method: 'GET',
+        data: {offset: offset},
+        async: false,
+        success: function (data) {
+            messages = data;
+        },
+    })
+    return messages;
+}
+
+function drawMessage(message, place = 'bottom')
+{
+    if (chatWindow.find('.chat-message[data-message-id="' + message.id + '"]').length > 0) {
+        return false;
+    }
+    let prototypeClass = 'message-to-me-prototype';
+    if (message.sender != null && message.sender.id === currentUser) {
+        prototypeClass = 'message-from-me-prototype';
+    }
+    let prototype = $('.' + prototypeClass).clone();
+    prototype.removeClass(prototypeClass);
+    prototype.data('message-id', message.id)
+    prototype.attr('data-message-id', message.id)
+    prototype.find('p.message-text').text(message.text);
+
+    let date = new Date(message.sentAt);
+    let time = date.getHours()+":"+date.getMinutes();
+
+    prototype.find('p.message-time').text(time)
+    if (place === "bottom") {
+        chatWindow.append(prototype)
+    } else {
+        chatWindow.prepend(prototype)
+    }
+}
+
+function fireAlert(message, type = 'danger')
+{
+
+}

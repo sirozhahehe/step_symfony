@@ -7,16 +7,15 @@
     <div class="row d-flex justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-6">
 
-        <div class="card" id="chat2">
+        <div class="card chat" data-chat-id="{{ chat.id }}" data-user-id="{{ app.user.id }}">
           <div class="card-header d-flex justify-content-between align-items-center p-3">
             <h5 class="mb-0">Chat</h5>
           </div>
           <div class="card-body chat-window">
 
         {% for message in messages %}
-
           {% if message.sender == app.user %}
-            <div class="d-flex flex-row justify-content-end">
+            <div class="d-flex flex-row justify-content-end chat-message" data-message-id="{{ message.id }}">
               <div>
                 <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">{{ message.text }}</p>
                 <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">{{ message.sentAt|date('H:i', 'Asia/Almaty') }}</p>
@@ -25,7 +24,7 @@
                 alt="avatar 1" style="width: 45px; height: 100%;">
             </div>
           {% else %}
-            <div class="d-flex flex-row justify-content-start mb-4">
+            <div class="d-flex flex-row justify-content-start mb-4 chat-message" data-message-id="{{ message.id }}">
               <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                 alt="avatar 1" style="width: 45px; height: 100%;">
               <div>
@@ -34,19 +33,7 @@
               </div>
             </div>
           {% endif %}
-
-
-
         {% endfor %}
-            {# <div class="d-flex flex-row justify-content-end">
-              <div>
-                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Okay then see you on sunday!!
-                </p>
-                <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:15</p>
-              </div>
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                alt="avatar 1" style="width: 45px; height: 100%;">
-            </div> #}
 
           </div>
           <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
@@ -62,16 +49,16 @@
               {{ form_end(form) }}
 
             <div class="prototypes">
-              <div class="d-flex flex-row justify-content-end message-from-me-prototype">
+              <div class="d-flex flex-row justify-content-end message-from-me-prototype chat-message">
                 <div>
                   <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary message-text"></p>
                   <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end message-time"></p>
                 </div>
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                  alt="avatar 1" style="width: 45px; height: 100%;">
+                     alt="avatar 1" style="width: 45px; height: 100%;">
               </div>
 
-              <div class="d-flex flex-row justify-content-start mb-4 message-to-me-prototype">
+              <div class="d-flex flex-row justify-content-start mb-4 message-to-me-prototype chat-message">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                   alt="avatar 1" style="width: 45px; height: 100%;">
                 <div>
@@ -82,10 +69,8 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </section>
 

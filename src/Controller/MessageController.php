@@ -6,16 +6,17 @@ use App\Entity\Chat;
 use App\Entity\Message;
 use App\Form\MessageType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class MessageController extends AbstractController
 {
 
     #[Route('/chat/{chat}', name: 'chat_send_message', requirements: ['chat' => '\d+'], methods: ['POST'])]
-    public function create(Chat $chat, Request $request, EntityManagerInterface $em)
+    public function create(Chat $chat, Request $request, EntityManagerInterface $em, SerializerInterface $serializer)
     {
         $message = new Message();
         $message->setSender($this->getUser());
@@ -28,7 +29,10 @@ class MessageController extends AbstractController
             $em->flush();
         }
 
-        return new Response();
+        return new JsonResponse(
+            data: $serializer->serialize($message, 'json', ['groups' => ['message']]),
+            json: true
+        );
     }
 
     #[Route('/message/delete/{message}', name: 'message_delete', requirements: ['message' => '\d+'])]
