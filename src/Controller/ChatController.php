@@ -8,8 +8,10 @@ use App\Form\ChatType;
 use App\Form\MessageType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ChatController extends AbstractController
 {
@@ -70,10 +72,13 @@ class ChatController extends AbstractController
     }
 
     #[Route('/chat/{chat}/getMessages', name: 'app_get_messages')]
-    public function getLastMessages(Chat $chat, EntityManagerInterface $em)
+    public function getLastMessages(Chat $chat, EntityManagerInterface $em, SerializerInterface $serializer)
     {
         $messages = $em->getRepository(Message::class)->findBy(['chat' => $chat]);
-        return $this->json($messages);
+        return new JsonResponse(
+            data: $serializer->serialize($messages, 'json', ['groups' => ['message']]),
+            json: true
+        );
     }
     
 }

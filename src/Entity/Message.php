@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity]
 #[ORM\Table('messages')]
@@ -12,19 +13,24 @@ class Message
     #[ORM\Id()]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups('message')]
     private $id;
 
     #[ORM\Column(type: 'string')]
+    #[Groups('message')]
     private $text;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups('message')]
     private $sentAt;
 
     #[ORM\ManyToOne(targetEntity: Chat::class, inversedBy: 'messages')]
+    #[Groups('message')]
     private Chat $chat;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn('sender_id', referencedColumnName: 'id')]
+    #[Groups('message')]
     private ?User $sender = null;
 
     public function __construct(?string $text = null)
