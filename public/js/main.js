@@ -4,6 +4,7 @@ const fetchMessagesURL = sendMessageURL + '/getMessages';
 const currentUser = chat.data('user-id');
 const chatWindow = chat.find('.chat-window');
 let isLoading = false;
+let allLoaded = false;
 
 $(document)
     .on('click', '#send_message', function (e) {
@@ -28,9 +29,13 @@ $(document)
 ;
 chatWindow.scroll(function() {
     if(chatWindow.scrollTop() == chatWindow.height() - chatWindow.height()) {
-        if (!isLoading) {
+        if (!isLoading && !allLoaded) {
             isLoading = true;
             let messages = fetchMessages(chatWindow.find('.chat-message').length).reverse();
+            if (messages.length === 0) {
+                allLoaded = true;
+                fireAlert('All messages loaded!', 'info');
+            }
             $(messages).each(function (i) {
                 drawMessage(this, 'top');
             })
@@ -93,5 +98,10 @@ function drawMessage(message, place = 'bottom')
 
 function fireAlert(message, type = 'danger')
 {
-
+    let alert = `<div class="alert alert-${type}" role="alert">${message}</div>`;
+    alert = $(alert);
+    chat.prepend(alert);
+    setTimeout(function () {
+        alert.remove();
+    }, 3000)
 }
