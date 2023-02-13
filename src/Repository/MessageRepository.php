@@ -17,6 +17,17 @@ class MessageRepository extends ServiceEntityRepository
 
     public function findMessagesPaginated(Chat|int $chat, int $limit = 10, int $offset = 0)
     {
+        $qb = $this->createQueryBuilder('m');
+        $qb
+            ->andWhere('m.chat = :chat')
+            ->setParameter('chat', $chat)
 
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+
+            ->orderBy('m.id', 'DESC')
+        ;    
+
+        return $qb->getQuery()->getResult();
     }
 }
