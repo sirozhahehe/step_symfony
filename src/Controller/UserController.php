@@ -21,10 +21,12 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $user->setPassword($hasher->hashPassword($user, $user->getPassword()));
-            $em->persist($user);
-            $em->flush();
-            return $this->redirectToRoute('app_homepage');
+            if ($form->isValid()) {
+                $user->setPassword($hasher->hashPassword($user, $user->getPassword()));
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('app_homepage');
+            }
         }
 
         return $this->render('register.html.twig', [
