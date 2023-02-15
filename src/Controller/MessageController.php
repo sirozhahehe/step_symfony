@@ -28,7 +28,10 @@ class MessageController extends AbstractController
             $em->flush();
         }
 
-        return new Response();
+        return $this->json(
+            data: $message,
+            context: ['groups' => ['message']],
+        );
     }
 
     #[Route('/message/delete/{message}', name: 'message_delete', requirements: ['message' => '\d+'])]
