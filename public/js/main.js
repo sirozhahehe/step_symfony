@@ -28,7 +28,7 @@ chatWindow.scroll(function () {
         $.ajax({
             url: fetchMessageURL,
             method: 'GET',
-            data: {offset: 10},
+            data: {offset: chatWindow.find('.chat-message').length},
             success: function(data) {
                 $(data).each(function (e) {
                     drawMessage(this, 'top');
@@ -36,7 +36,38 @@ chatWindow.scroll(function () {
             }
         })
     }
-})
+});
+
+$(document).ready(function () {
+    chatWindow.scrollTop(chatWindow[0].scrollHeight)
+    setInterval(function () {
+        $.ajax({
+            url: fetchMessageURL,
+            method: 'GET',
+            success: function(data) {
+                $(data).each(function (e) {
+                    drawMessage(this);
+                });
+            }
+        })
+    }, 2000);
+
+});
+
+function fetchMessages(offset = 0)
+{
+    let messages = [];
+    $.ajax({
+        url: fetchMessageURL,
+        method: 'GET',
+        async: false,
+        data: {offset: offset},
+        success: function(data) {
+            messages = data;
+        }
+    })
+    return messages;
+}
 
 function drawMessage(message, place = 'bottom')
 {
