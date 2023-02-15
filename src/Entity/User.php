@@ -31,13 +31,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = ['ROLE_USER'];
 
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column]
     #[NotBlank]
     #[Regex('/^.{3,180}$/')]
     private ?string $password = null;
+
+    #[ORM\OneToOne(targetEntity: Image::class)]
+    private ?Image $image = null;
 
     public function getId(): ?int
     {
@@ -122,4 +122,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+	public function getImage(): ?Image 
+    {
+		return $this->image;
+	}
+	
+	public function setImage(?Image $image): self 
+    {
+		$this->image = $image;
+		return $this;
+	}
 }

@@ -45,4 +45,10 @@ class UserController extends AbstractController
             'error'         => $error,
         ]);
     }
+
+    #[Route('/user/edit', name: 'app_edit_user')]
+    public function editUser()
+    {
+
+    }
 }
