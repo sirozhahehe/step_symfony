@@ -37,6 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\OneToOne(targetEntity: Image::class)]
+    #[Groups('message')]
     private ?Image $image = null;
 
     private $plainPassword;

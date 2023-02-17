@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Table('images')]
@@ -15,6 +16,7 @@ class Image
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups('message')]
     private string $path;
 
     #[ORM\Column]

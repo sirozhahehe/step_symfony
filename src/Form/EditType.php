@@ -16,7 +16,10 @@ class EditType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('plainPassword', PasswordType::class)
+            ->add('plainPassword', PasswordType::class, [
+                'required' => false,
+                'label' => 'Password',
+            ])
             ->add('image', HiddenType::class, [
                 'mapped' => false,
                 'attr' => [

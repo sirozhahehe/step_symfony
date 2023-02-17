@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\User;
 use App\Form\EditType;
 use App\Form\RegisterType;
@@ -55,8 +56,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('image')->getData()) {
-                
+            if ($imageId = $form->get('image')->getData()) {
+                $user->setImage($em->getRepository(Image::class)->find($imageId));
             }
             if ($user->getPlainPassword()) {
                 $user->setPassword($hasher->hashPassword($user, $user->getPlainPassword()));
