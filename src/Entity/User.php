@@ -39,6 +39,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: Image::class)]
     private ?Image $image = null;
 
+    private $plainPassword;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -131,6 +133,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 	public function setImage(?Image $image): self 
     {
 		$this->image = $image;
+		return $this;
+	}
+
+	public function getPlainPassword() 
+    {
+		return $this->plainPassword;
+	}
+	
+	public function setPlainPassword($plainPassword): self 
+    {
+		$this->plainPassword = $plainPassword;
 		return $this;
 	}
 }
