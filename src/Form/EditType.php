@@ -4,6 +4,7 @@ namespace App\Form;
 use App\Entity\Message;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,6 +17,12 @@ class EditType extends AbstractType
         $builder
             ->add('username')
             ->add('plainPassword', PasswordType::class)
+            ->add('image', HiddenType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'image-id',
+                ],
+            ])
             ->add('edit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-success',

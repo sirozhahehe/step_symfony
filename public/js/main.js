@@ -35,14 +35,15 @@ chatWindow.scroll(function () {
 });
 
 $(document).ready(function () {
-    chatWindow.scrollTop(chatWindow[0].scrollHeight)
-    setInterval(function () {
-        let messages = fetchMessages();
-        $(messages).each(function () {
-            drawMessage(this);
-        });
-    }, 5000);
-
+    if (chatWindow.length > 0) {
+        chatWindow.scrollTop(chatWindow[0].scrollHeight)
+        setInterval(function () {
+            let messages = fetchMessages();
+            $(messages).each(function () {
+                drawMessage(this);
+            });
+        }, 5000);
+    }
 });
 
 function fetchMessages(offset = 0)
@@ -87,3 +88,21 @@ function drawMessage(message, place = 'bottom')
         chatWindow.prepend(prototype);
     }
 }
+
+const imageUploadURL = '/image/upload';
+$(document)
+    .on('change', '.upload-image', function(e) {
+        let fd = new FormData();
+        fd.append('file', this.files[0]);
+        $.ajax({
+            url: imageUploadURL,
+            method: 'POST',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                $('input.image-id').val(data.id);
+            },
+        });
+    })
+;

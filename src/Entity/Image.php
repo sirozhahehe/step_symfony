@@ -26,6 +26,11 @@ class Image
         $this->originalFilename = $originalFilename;
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getPath(): string
     {
         return $this->path;
