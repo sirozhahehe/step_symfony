@@ -28,8 +28,8 @@ div.prototypes {
 
 .chat-users {
     position: absolute;
-top: 0;
-left: -210px;
-height: 540px;
-overflow-y: scroll;
+    top: 0;
+    left: -210px;
+    height: 540px;
+    overflow-y: scroll;
 }

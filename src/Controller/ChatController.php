@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Chat;
 use App\Form\ChatType;
 use App\Form\MessageType;
+use App\Repository\ChatRepository;
 use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,6 +50,33 @@ class ChatController extends AbstractController
             'chats' => $em->getRepository(Chat::class)->findAll(),
             'form'     => $form->createView(),
         ]);
+    }
+
+    #[Route('/chat/personal', name: 'app_chat_create_personal')]
+    public function getOrCreatePersonalChat(
+        Request $request, 
+        EntityManagerInterface $em, 
+        UserRepository $userRepository, 
+        ChatRepository $chatRepository,  
+    ) {
+        $user = $userRepository->findOneBy(['id' => $request->query->get('userId')]);
+        if (!$user) {
+            throw $this->createNotFoundException();
+        }
+        $currentUser = $this->getUser();
+
+        dump($chatRepository->findPersonalChat($user, $currentUser));die;
+
+        $chat = new Chat();
+        $chat
+            ->addUserToChat($user)
+            ->addUserToChat($currentUser)
+        ;
+        // $em->persist($chat);
+        // $em->flush();
+
+        dump($chat);die;
+
     }
 
     #[IsGranted('ROLE_MANAGER')]
