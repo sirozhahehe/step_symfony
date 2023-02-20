@@ -6,7 +6,9 @@ use App\Entity\Chat;
 use App\Form\ChatType;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,15 +19,17 @@ class ChatController extends AbstractController
 {
 
     #[Route('/chat/{chat}', name: 'chat_view', requirements: ['chat' => '\d+'], methods: ['GET'])]
-    public function view(Chat $chat, MessageRepository $messageRepository)
+    public function view(Chat $chat, MessageRepository $messageRepository, UserRepository $userRepository)
     {
         return $this->render('chat.html.twig', [
+            'users'    => $userRepository->findAllExcept($this->getUser()),
             'messages' => array_reverse($messageRepository->findMessagesPaginated($chat)),
             'chat'     => $chat,
             'form'     => $this->createForm(MessageType::class)->createView(),
         ]);
     }
 
+    #[IsGranted('ROLE_MANAGER')]
     #[Route('/chat/create', name: 'chat_create')]
     public function create(Request $request, EntityManagerInterface $em)
     {
@@ -47,6 +51,7 @@ class ChatController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_MANAGER')]
     #[Route('/chat/edit/{chat}', name: 'chat_edit', requirements: ['chat' => '\d+'])]
     public function edit(Chat $chat, Request $request, EntityManagerInterface $em)
     {
@@ -64,6 +69,7 @@ class ChatController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/chat/delete/{chat}', name: 'chat_delete', requirements: ['chat' => '\d+'])]
     public function delete(Chat $chat, EntityManagerInterface $em)
     {

@@ -77,6 +77,9 @@ function drawMessage(message, place = 'bottom')
     prototype.data('message-id', message.id);
     prototype.attr('data-message-id', message.id);
     prototype.find('p.message-text').text(message.text);
+    if (message.sender && message.sender.image) {
+        prototype.find('img.message-image').attr('src', '/' + message.sender.image.path);
+    }
 
     let date = new Date(message.sentAt);
     let time = date.getHours()+":"+date.getMinutes();

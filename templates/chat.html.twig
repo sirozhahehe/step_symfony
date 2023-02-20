@@ -5,7 +5,7 @@
   <div class="container py-5">
 
     <div class="row d-flex justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-6">
+      <div class="col-md-10 col-lg-8 col-xl-6" style="position: relative">
 
         <div class="card chat" data-chat-id="{{ chat.id }}" data-user-id="{{ app.user.id }}">
           <div class="card-header d-flex justify-content-between align-items-center p-3">
@@ -93,6 +93,25 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="chat-users">
+        {% for user in users %}
+            <div class="d-flex flex-row justify-content-start mb-1 chat-user" style="background-color: #f5f6f7; width: 200px">
+                <img class="message-image"  src="
+                {% if user.image %}
+                  /{{ user.image.path }}
+                {% else %}
+                  https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp
+                {% endif %}
+              "
+                  alt="avatar 1" style="width: 45px; height: 100%;">
+                <div>
+                  <p class="small ms-2">{{ user.username }}</p>
+                  <p class="small ms-3">Last message</p>
+                </div>
+              </div>
+        {% endfor %}
         </div>
 
       </div>

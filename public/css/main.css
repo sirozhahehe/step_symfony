@@ -25,3 +25,11 @@ div.prototypes {
     padding: 12px 0 0 0;
     color: #59a6ff;
 }
+
+.chat-users {
+    position: absolute;
+top: 0;
+left: -210px;
+height: 540px;
+overflow-y: scroll;
+}

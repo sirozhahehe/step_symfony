@@ -48,6 +48,12 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/logout', name: 'app_logout')]
+    public function logout()
+    {
+
+    }
+
     #[Route('/user/edit', name: 'app_edit_user')]
     public function editUser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher)
     {
