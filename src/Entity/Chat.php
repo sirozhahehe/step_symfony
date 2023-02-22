@@ -34,6 +34,7 @@ class Chat
 
 	public function __construct()
 	{
+		$this->messages = new ArrayCollection();
 		$this->users = new ArrayCollection();
 	}
 

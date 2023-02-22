@@ -20,10 +20,26 @@ class ChatController extends AbstractController
 {
 
     #[Route('/chat/{chat}', name: 'chat_view', requirements: ['chat' => '\d+'], methods: ['GET'])]
-    public function view(Chat $chat, MessageRepository $messageRepository, UserRepository $userRepository)
+    public function view(
+        Chat $chat, 
+        MessageRepository $messageRepository, 
+        UserRepository $userRepository,
+        ChatService $chatService,
+    )
     {
+        $resultUsers = [];
+        $users = $userRepository->findAllExcept($this->getUser());
+        foreach ($users as $user) {
+            $chat = $chatService->getOrCreatePersonalChat($this->getUser(), $user);
+            $resultUsers[] = [
+                'user' => $user,
+                'chat' => $chat->getId(),
+                'lastMessage' => $chat->getMessages()->last(),
+            ];
+        }
+
         return $this->render('chat.html.twig', [
-            'users'    => $userRepository->findAllExcept($this->getUser()),
+            'chatData' => $resultUsers,
             'messages' => array_reverse($messageRepository->findMessagesPaginated($chat)),
             'chat'     => $chat,
             'form'     => $this->createForm(MessageType::class)->createView(),
