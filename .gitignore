@@ -14,6 +14,7 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 /docker/
+docker-compose.yml
 /.idea/
 /.vscode/
 ###> symfony/phpunit-bridge ###

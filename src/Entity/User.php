@@ -151,4 +151,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 		$this->plainPassword = $plainPassword;
 		return $this;
 	}
+
+
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+
+    public function setChats(Collection $chats): User
+    {
+        $this->chats = $chats;
+        return $this;
+    }
 }

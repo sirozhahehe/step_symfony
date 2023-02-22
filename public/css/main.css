@@ -33,3 +33,22 @@ div.prototypes {
     height: 540px;
     overflow-y: scroll;
 }
+.chat-user {
+    background-color: #f5f6f7;
+    width: 200px;
+    border-radius: 5px;
+}
+.chat-info {
+    margin-top: 10px;
+}
+.chat-info p {
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.chat-info p:last-child {
+    margin-left: 15px;
+}
+.chat-user .message-image {
+    margin-top: 10px;
+    margin-left: 5px;
+}

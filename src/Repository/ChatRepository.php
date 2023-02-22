@@ -16,17 +16,13 @@ class ChatRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, Chat::class);
     }
 
-    public function findPersonalChat(User $firstUser, User $secondUser)
+    public function findChatsWithUser(User $user)
     {
-
         $qb = $this->createQueryBuilder('c');
         $qb
             ->innerJoin('c.users', 'u')
-            ->andWhere('u.id = :firstUser')
-            ->andWhere('u.id = :secondUser')
-
-            ->setParameter('firstUser', $firstUser)
-            ->setParameter('secondUser', $secondUser)
+            ->andWhere('u.id = :user')
+            ->setParameter('user', $user)
         ;
 
         return $qb->getQuery()->getResult();

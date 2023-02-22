@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Chat;
 use App\Form\ChatType;
 use App\Form\MessageType;
-use App\Repository\ChatRepository;
 use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
+use App\Service\ChatService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,10 +54,9 @@ class ChatController extends AbstractController
 
     #[Route('/chat/personal', name: 'app_chat_create_personal')]
     public function getOrCreatePersonalChat(
-        Request $request, 
-        EntityManagerInterface $em, 
-        UserRepository $userRepository, 
-        ChatRepository $chatRepository,  
+        Request $request,
+        UserRepository $userRepository,
+        ChatService $chatService,
     ) {
         $user = $userRepository->findOneBy(['id' => $request->query->get('userId')]);
         if (!$user) {
@@ -65,18 +64,9 @@ class ChatController extends AbstractController
         }
         $currentUser = $this->getUser();
 
-        dump($chatRepository->findPersonalChat($user, $currentUser));die;
+        $chat = $chatService->getOrCreatePersonalChat($currentUser, $user);
 
-        $chat = new Chat();
-        $chat
-            ->addUserToChat($user)
-            ->addUserToChat($currentUser)
-        ;
-        // $em->persist($chat);
-        // $em->flush();
-
-        dump($chat);die;
-
+        return $this->json(['id' => $chat->getId()]);
     }
 
     #[IsGranted('ROLE_MANAGER')]
@@ -108,8 +98,8 @@ class ChatController extends AbstractController
 
     #[Route('/chat/{chat}/getMessages', name: 'app_get_messages')]
     public function getLastMessages(
-        Chat $chat, 
-        MessageRepository $messageRepository, 
+        Chat $chat,
+        MessageRepository $messageRepository,
         SerializerInterface $serializer,
         Request $request,
     )

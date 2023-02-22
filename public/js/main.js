@@ -108,4 +108,15 @@ $(document)
             },
         });
     })
+    .on('click', '.chat-user', function (e) {
+        const userId = $(this).data('user-id');
+        $.ajax({
+            url: '/chat/personal',
+            method: 'GET',
+            data: {userId: userId},
+            success: function (data) {
+
+            }
+        })
+    })
 ;

@@ -97,7 +97,7 @@
 
         <div class="chat-users">
         {% for user in users %}
-            <div class="d-flex flex-row justify-content-start mb-1 chat-user" style="background-color: #f5f6f7; width: 200px">
+            <div class="d-flex flex-row justify-content-start mb-1 chat-user" data-user-id="{{ user.id }}">
                 <img class="message-image"  src="
                 {% if user.image %}
                   /{{ user.image.path }}
@@ -106,9 +106,9 @@
                 {% endif %}
               "
                   alt="avatar 1" style="width: 45px; height: 100%;">
-                <div>
-                  <p class="small ms-2">{{ user.username }}</p>
-                  <p class="small ms-3">Last message</p>
+                <div class="chat-info">
+                  <p class="small">{{ user.username }}</p>
+                  <p class="small">Last message</p>
                 </div>
               </div>
         {% endfor %}
