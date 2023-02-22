@@ -2,8 +2,8 @@ const chat = $('.chat');
 const chatWindow = chat.find('.chat-window');
 const currentUser = chat.data('user-id');
 
-const sendMessageURL = '/chat/' + chat.data('chat-id');
-const fetchMessageURL = sendMessageURL + '/getMessages';
+let sendMessageURL = '/chat/' + chat.data('chat-id');
+let fetchMessageURL = sendMessageURL + '/getMessages';
 
 $(document)
     .on('click', '#send_message', function (e) {
@@ -93,6 +93,8 @@ function drawMessage(message, place = 'bottom')
 }
 
 const imageUploadURL = '/image/upload';
+
+let currentChatId = null;
 $(document)
     .on('change', '.upload-image', function(e) {
         let fd = new FormData();
@@ -109,14 +111,21 @@ $(document)
         });
     })
     .on('click', '.chat-user', function (e) {
-        const userId = $(this).data('user-id');
-        $.ajax({
-            url: '/chat/personal',
-            method: 'GET',
-            data: {userId: userId},
-            success: function (data) {
+        const userDiv = $(this);
+        const userId = userDiv.data('user-id');
+        const chatId = userDiv.data('chat-id');
 
-            }
-        })
+        if (!currentChatId && chatId !== currentChatId) {
+            $.ajax({
+                url: '/chat/personal',
+                method: 'GET',
+                data: {userId: userId},
+                async: false,
+                success: function (data) {
+                    currentChatId = data.id;
+                    userDiv.data('chat-id', data.id);
+                }
+            })
+        }
     })
 ;
