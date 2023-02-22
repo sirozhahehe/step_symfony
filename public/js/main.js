@@ -26,11 +26,13 @@ $(document)
 chatWindow.scroll(function () {
     if (chatWindow.scrollTop() == 0) {
         let firstMessage = chatWindow.find('.chat-message:first');
-        let messages = fetchMessages(chatWindow.find('.chat-message').length);
-        $(messages).each(function () {
-            drawMessage(this, 'top');
-        });
-        chatWindow.scrollTop(firstMessage.offset().top - 170);
+        if (firstMessage.length > 0) {
+            let messages = fetchMessages(chatWindow.find('.chat-message').length);
+            $(messages).each(function () {
+                drawMessage(this, 'top');
+            });
+            chatWindow.scrollTop(firstMessage.offset().top - 170);
+        }
     }
 });
 
@@ -115,7 +117,7 @@ $(document)
         const userId = userDiv.data('user-id');
         const chatId = userDiv.data('chat-id');
 
-        if (!currentChatId && chatId !== currentChatId) {
+        if (!currentChatId || chatId !== currentChatId) {
             $.ajax({
                 url: '/chat/personal',
                 method: 'GET',
@@ -127,5 +129,11 @@ $(document)
                 }
             })
         }
+        sendMessageURL = '/chat/' + currentChatId;
+        fetchMessageURL = sendMessageURL + '/getMessages';
+        chatWindow.find('.chat-message').remove();
+        $(fetchMessages()).each(function(e) {
+            drawMessage(this);
+        });
     })
 ;
