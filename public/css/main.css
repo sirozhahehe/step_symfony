@@ -44,6 +44,7 @@ div.prototypes {
 }
 .chat-info {
     margin-top: 10px;
+    max-width: 150px;
 }
 .chat-info p {
     margin-bottom: 10px;

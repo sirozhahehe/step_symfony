@@ -133,7 +133,7 @@ $(document)
         fetchMessageURL = sendMessageURL + '/getMessages';
         chatWindow.find('.chat-message').remove();
         $(fetchMessages()).each(function(e) {
-            drawMessage(this);
+            drawMessage(this, 'top');
         });
     })
 ;
