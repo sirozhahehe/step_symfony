@@ -74,3 +74,15 @@ div.prototypes {
 .reply-to-btn:hover {
     background: #1632c2;
 }
+.form-container {
+    position: relative;
+}
+.reply-to-message {
+    position: absolute;
+    left: 65px;
+    top: -24px;
+    width: 458px;
+    background: #cccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
