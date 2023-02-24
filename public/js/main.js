@@ -13,6 +13,7 @@ $(document)
         let input = form.find('input#message_text');
         $('.replyToMessage').val('');
         input.val('');
+        toggleReplyBlock();
         $.ajax({
             url: sendMessageURL,
             method: 'POST',
@@ -25,9 +26,22 @@ $(document)
     .on('click', '.reply-to-btn', function(e) {
         const messageId = $(this).closest('.chat-message').data('message-id');
         $('.replyToMessage').val(messageId);
+        const messageText = $(this).next().text();
+        toggleReplyBlock(messageText);
     })
 
 ;
+function toggleReplyBlock(messageText = '')
+{
+    const replyBlock = $('.reply-to-message');
+    if (!messageText) {
+        replyBlock.hide();
+    } else {
+        replyBlock.show();
+    }
+    
+    replyBlock.find('p').text(messageText);
+}
 chatWindow.scroll(function () {
     if (chatWindow.scrollTop() == 0) {
         let firstMessage = chatWindow.find('.chat-message:first');

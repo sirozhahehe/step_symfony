@@ -19,7 +19,7 @@
             <div class="d-flex flex-row justify-content-end chat-message" data-message-id="{{ message.id }}">
               <div class="message-content">
                 <span class="reply-to-btn"><i class="fas fa-reply"></i></span>
-                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">{{ message.text }}</p>
+                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary message-text">{{ message.text }}</p>
                 <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">{{ message.sentAt|date('H:i', 'Asia/Almaty') }}</p>
               </div>
               <img src="
@@ -43,7 +43,7 @@
                 alt="avatar 1" style="width: 45px; height: 100%;">
               <div class="message-content">
                 <span class="reply-to-btn"><i class="fas fa-reply"></i></span>
-                <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">{{ message.text }}</p>
+                <p class="small p-2 ms-3 mb-1 rounded-3 message-text" style="background-color: #f5f6f7;">{{ message.text }}</p>
                 <p class="small ms-3 mb-3 rounded-3 text-muted">{{ message.sentAt|date('H:i', 'Asia/Almaty') }}</p>
               </div>
             </div>
@@ -70,9 +70,12 @@
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
               alt="avatar 3" style="width: 40px; height: 100%;">
               {{ form_start(form) }}
+
               {{ form_widget(form.text) }}
-        
-              <a class="ms-1 chat-btn text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
+              <label class="ms-1 chat-btn text-muted">
+                <i class="fas fa-paperclip"></i>
+                <input type="file" style="display: none;" class="upload-image">
+              </label>
               <a class="ms-3 chat-btn text-muted" href="#!"><i class="fas fa-smile"></i></a>
               <button id="send_message" class="ms-3 chat-btn" type="submit"><i class="fas fa-paper-plane"></i></button>
             

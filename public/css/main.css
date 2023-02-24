@@ -86,3 +86,6 @@ div.prototypes {
     padding: 5px 10px;
     border-radius: 5px;
 }
+.chat-btn {
+    cursor: pointer;
+}

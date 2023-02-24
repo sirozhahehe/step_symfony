@@ -27,6 +27,12 @@ class MessageType extends AbstractType
                     'class' => 'replyToMessage',
                 ],
             ])
+            ->add('imageId', HiddenType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'image-id',
+                ],
+            ])
         ;
     }
 
