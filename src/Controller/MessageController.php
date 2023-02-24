@@ -24,7 +24,11 @@ class MessageController extends AbstractController
 
         if ($form->isSubmitted()) {
             $message->setChat($chat);
-            $messageService->saveMessage($message, $form->get('replyTo')->getData());
+            $messageService->saveMessage(
+                $message, 
+                $form->get('replyTo')->getData(),
+                $form->get('imageId')->getData(),
+            );
         }
 
         return $this->json(

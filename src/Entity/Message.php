@@ -43,6 +43,10 @@ class Message
     #[Groups('message')]
     private ?User $sender = null;
 
+    #[ORM\OneToOne(targetEntity: Image::class)]
+    #[Groups('message')]
+    private ?Image $image = null;
+
     public function __construct(?string $text = null)
     {
         $this->text = $text;
@@ -113,6 +117,17 @@ class Message
 	public function setMessage(Message $message): self 
     {
 		$this->message = $message;
+		return $this;
+	}
+
+	public function getImage(): ?Image 
+    {
+		return $this->image;
+	}
+	
+	public function setImage(Image $image): self 
+    {
+		$this->image = $image;
 		return $this;
 	}
 }
