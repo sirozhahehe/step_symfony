@@ -57,3 +57,17 @@ div.prototypes {
     margin-top: 10px;
     margin-left: 5px;
 }
+
+.message-content {
+    position: relative;
+}
+.reply-to-btn {
+    position: absolute;
+    right: 0;
+    top: -10px;
+    color: #fff;
+    background: #1e40f2;
+    border-radius: 50%;
+    padding: 0 4px;
+    cursor: pointer;
+}
