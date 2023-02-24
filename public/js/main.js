@@ -11,6 +11,7 @@ $(document)
         let form = $(this).closest('form');
         let formData = form.serialize();
         let input = form.find('input#message_text');
+        $('.replyToMessage').val('');
         input.val('');
         $.ajax({
             url: sendMessageURL,
@@ -20,6 +21,10 @@ $(document)
                 drawMessage(data);
             }
         });
+    })
+    .on('click', '.reply-to-btn', function(e) {
+        const messageId = $(this).closest('.chat-message').data('message-id');
+        $('.replyToMessage').val(messageId);
     })
 
 ;

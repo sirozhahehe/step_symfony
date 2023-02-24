@@ -71,3 +71,6 @@ div.prototypes {
     padding: 0 4px;
     cursor: pointer;
 }
+.reply-to-btn:hover {
+    background: #1632c2;
+}
